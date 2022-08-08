@@ -1,0 +1,1 @@
+export const PHONON_TOKEN_DECIMALS = 18;

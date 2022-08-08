@@ -1,0 +1,47 @@
+name: Deploy web app
+
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    environment: github-pages
+    name: Build web app
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Branch
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        run: cd web-app && yarn
+        shell: bash
+      - name: Build production web app
+        env:
+          RPC_URL: ${{ secrets.RPC_URL }}
+        run: cd web-app && REACT_APP_NETWORK_NAME=goerli REACT_APP_RPC_URL=https://eth-goerli.g.alchemy.com/v2/BmeE24z1l0uRuJyN7kY1NTMTTSRB8LCU yarn build
+        shell: bash
+      - name: Upload production-ready build files
+        uses: actions/upload-artifact@v2
+        with:
+          name: production-files
+          path: ./web-app/build
+
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: production-files
+          path: ./build
+
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build
+          cname: claim-rewards.hinchliff.dev

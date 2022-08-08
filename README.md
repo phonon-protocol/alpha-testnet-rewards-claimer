@@ -26,7 +26,7 @@ From the `smart-contracts` sub project run `yarn && yarn test`
 
 ### Web App
 
-1. Add the `rewards` value from `./smart-contracts/scripts/deploy/deployments/[network name].json` to `./src/config/rewards-list.ts` (replace the current value).
+1. Add the generated deployment config found in `./smart-contracts/scripts/deploy/deployments/[network name].json` to `./src/config/rewards-lists/[network name].json`.
 2. See `./env.sample` for the required environment variables.
 3. Deploy the React App to your favourite hosting solution.
 

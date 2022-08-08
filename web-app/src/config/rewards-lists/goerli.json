@@ -1,0 +1,25 @@
+{
+	"contractAddress": "0x5Fd374e02b6c5e87a806A54fF501B2b93D903e06",
+	"phononTokenAddress": "0x8d12d40A5392b155084B613F79CcAeD8f86AC9Ef",
+	"daoMultiSigAddress": "0x3E5c9CEd70887166612CED5B537fb294dcECb357",
+	"rewards": [
+		{
+			"address": "0x3E5c9CEd70887166612CED5B537fb294dcECb357",
+			"amount": "100"
+		},
+		{
+			"address": "0x3c44cdddb6a900fa2b585dd299e03d12fa4293bc",
+			"amount": "200"
+		},
+		{
+			"address": "0x90f79bf6eb2c4f870365e785982e1f101e93b906",
+			"amount": "300"
+		},
+		{
+			"address": "0x15d34aaf54267db7d7c367839aaf71a00a2c6a65",
+			"amount": "400"
+		},
+		{ "address": "0x9965507d1a55bcc2695c58ba16fb37d819b0a4dc", "amount": "500" }
+	],
+	"totalRewards": "1500.0"
+}
