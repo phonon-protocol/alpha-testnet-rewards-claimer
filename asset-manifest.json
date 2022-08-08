@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/alpha-testnet-rewards-claimer/static/css/main.4ca9755f.css",
-    "main.js": "/alpha-testnet-rewards-claimer/static/js/main.2fc3b165.js",
-    "static/js/787.ad88ded0.chunk.js": "/alpha-testnet-rewards-claimer/static/js/787.ad88ded0.chunk.js",
-    "static/media/background.webp": "/alpha-testnet-rewards-claimer/static/media/background.8491eab61413aa16271c.webp",
-    "index.html": "/alpha-testnet-rewards-claimer/index.html",
-    "main.4ca9755f.css.map": "/alpha-testnet-rewards-claimer/static/css/main.4ca9755f.css.map",
-    "main.2fc3b165.js.map": "/alpha-testnet-rewards-claimer/static/js/main.2fc3b165.js.map",
-    "787.ad88ded0.chunk.js.map": "/alpha-testnet-rewards-claimer/static/js/787.ad88ded0.chunk.js.map"
+    "main.css": "/static/css/main.28acc23a.css",
+    "main.js": "/static/js/main.b694772f.js",
+    "static/js/787.ad88ded0.chunk.js": "/static/js/787.ad88ded0.chunk.js",
+    "static/media/background.webp": "/static/media/background.8491eab61413aa16271c.webp",
+    "index.html": "/index.html",
+    "main.28acc23a.css.map": "/static/css/main.28acc23a.css.map",
+    "main.b694772f.js.map": "/static/js/main.b694772f.js.map",
+    "787.ad88ded0.chunk.js.map": "/static/js/787.ad88ded0.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.4ca9755f.css",
-    "static/js/main.2fc3b165.js"
+    "static/css/main.28acc23a.css",
+    "static/js/main.b694772f.js"
   ]
 }
