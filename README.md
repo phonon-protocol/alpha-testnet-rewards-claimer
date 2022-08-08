@@ -22,7 +22,8 @@ From the `smart-contracts` sub project run `yarn && yarn test`
 3. If missing, add the network you wish to deploy to's config to `hardhat.config.ts`
 4. Add a `[network name].csv` listing the rewards amount for each address to `scripts/deploy/rewards` with the headings `address,amount`. See `scripts/deploy/rewards/localhost.csv` for an example.
 5. Run `npx hardhat deploy --phonontokenaddress [PHONON token address] --daomultisigaddress [DAO multi sig address] --network [network name]`. If deploying to a test chain you may with to use the `deploy-with-token` script instead. See the running locally instructions below.
-6. Transfer PHONON to the deployed contract.
+6. Verify the contract with `npx hardhat verify --network [network name] [contract address] [PHONON token address] [multi sig address] [merkle tree root hash]`
+7. Transfer PHONON to the deployed contract.
 
 ### Web App
 

@@ -53,6 +53,7 @@ task("deploy")
       contractAddress: contract.address,
       phononTokenAddress: args.phonontokenaddress,
       daoMultiSigAddress: args.daomultisigaddress,
+      rootHash: merkleTree.rootHash,
       rewards,
       totalRewards: ethers.utils.formatEther(
         rewards.reduce(
