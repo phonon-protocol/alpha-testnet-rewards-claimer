@@ -1,26 +1,53 @@
 {
-  "contractAddress": "0x5Fd374e02b6c5e87a806A54fF501B2b93D903e06",
-  "phononTokenAddress": "0x8d12d40A5392b155084B613F79CcAeD8f86AC9Ef",
+  "contractAddress": "0xb2a0ee7Db39931c76543BeCE85143A36C4D564ba",
+  "phononTokenAddress": "0x1f97885BF402382171B0DFd6F188B0e5d7f54C03",
   "daoMultiSigAddress": "0x3E5c9CEd70887166612CED5B537fb294dcECb357",
-  "rootHash": "0x50c505a739e9163cbb250990dfa509149bf5503643af57b1fc5e5065a8dd40eb",
+  "rootHash": "0x78f2f5d20c0b18a990c4f799caac9053b12c91beaf5e5092790ee82a19260fe8",
   "rewards": [
     {
-      "address": "0x3E5c9CEd70887166612CED5B537fb294dcECb357",
+      "address": "0x924CF7da1ecec313471ea16E8C58a3141f094546",
       "amount": "100"
     },
     {
-      "address": "0x3c44cdddb6a900fa2b585dd299e03d12fa4293bc",
+      "address": "0xe8bdfda494fea37ba819de817bfc63bfeffebb1d",
       "amount": "200"
     },
     {
-      "address": "0x90f79bf6eb2c4f870365e785982e1f101e93b906",
+      "address": "0x04a2cf1a0654385a8a28f2112badda9ecfde330f",
       "amount": "300"
     },
     {
-      "address": "0x15d34aaf54267db7d7c367839aaf71a00a2c6a65",
+      "address": "0xc8369d45e0b9f07850857a0df1324d1e4727a431",
       "amount": "400"
     },
-    { "address": "0x9965507d1a55bcc2695c58ba16fb37d819b0a4dc", "amount": "500" }
+    {
+      "address": "0x2dddeb3ce8ffc6833d4496bb7ee798074b57c07e",
+      "amount": "500"
+    },
+    {
+      "address": "0xda9a3dace56a5d49ead697162f7cfdbda2c10aae",
+      "amount": "600"
+    },
+    {
+      "address": "0x6750f4d8e7e746d148e1594aed5c9ece9109a871",
+      "amount": "700"
+    },
+    {
+      "address": "0xf1cf393d9b5a70bbb1e3e4218c5ac620d90c3d7b",
+      "amount": "800"
+    },
+    {
+      "address": "0x178993de10c142beca8d3903ce89ff28e1e847c2",
+      "amount": "900"
+    },
+    {
+      "address": "0x68435ce3f51670488e3093d9f8b47b13adfe633b",
+      "amount": "1000"
+    },
+    {
+      "address": "0x3fb858d5d127b7812b6f5c94578a0503685ec5cf",
+      "amount": "1100"
+    }
   ],
-  "totalRewards": "1500.0"
+  "totalRewards": "6600.0"
 }
