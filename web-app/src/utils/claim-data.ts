@@ -35,10 +35,9 @@ export const getSystemData = async (): Promise<SystemData> => {
 
 	const totalRewards = ethers.utils.parseEther(config.totalRewards);
 
-	const percentageClaimed = totalRewards
-		.sub(claimerPhononBalance)
-		.mul(10000)
-		.div(totalRewards);
+	const percentageClaimed = claimerPhononBalance.isZero()
+		? ethers.constants.Zero
+		: totalRewards.sub(claimerPhononBalance).mul(10000).div(totalRewards);
 
 	return {
 		claimerPhononBalance,

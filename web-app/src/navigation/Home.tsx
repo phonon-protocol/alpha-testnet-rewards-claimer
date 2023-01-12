@@ -98,7 +98,13 @@ const Home: React.FC = () => {
 						<div className='col-span-4 text-right'>
 							<DisplayUserData
 								accountConnected={!!accountData}
-								data={userData?.hasClaimed ? 'Yes' : 'No'}
+								data={
+									userData?.hasClaimed === undefined
+										? undefined
+										: userData.hasClaimed
+										? 'Yes'
+										: 'No'
+								}
 							/>
 						</div>
 					</div>

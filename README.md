@@ -19,9 +19,9 @@ From the `smart-contracts` sub project run `yarn && yarn test`
 
 1. `yarn`
 2. `cp .env.sample .env` and add your Etherscan and a RPC URL for the network you wish to deploy to.
-3. If missing, add the network you wish to deploy to's config to `hardhat.config.ts`
+3. If missing, add the network config to `hardhat.config.ts`
 4. Add a `[network name].csv` listing the rewards amount for each address to `scripts/deploy/rewards` with the headings `address,amount`. See `scripts/deploy/rewards/localhost.csv` for an example.
-5. Run `npx hardhat deploy --phonontokenaddress [PHONON token address] --daomultisigaddress [DAO multi sig address] --network [network name]`. If deploying to a test chain you may with to use the `deploy-with-token` script instead. See the running locally instructions below.
+5. Run `npx hardhat deploy --phonontokenaddress [PHONON token address] --daomultisigaddress [DAO multi sig address] --network [network name]`. If deploying to a test chain you may wish to use the `deploy-with-token` script instead. See the running locally instructions below.
 6. Verify the contract with `npx hardhat verify --network [network name] [contract address] [PHONON token address] [multi sig address] [merkle tree root hash]`
 7. Transfer PHONON to the deployed contract.
 
@@ -39,8 +39,8 @@ The defaut config in both projects is for running the project locally with a moc
 
 1. `yarn`
 1. `npx hardhat node`
-1. In a second terminal, `npx hardhat deploy-with-token --network localhost --0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266`
-1. `npx hardhat deposit-into-claimer --network localhost --claimeraddress 0x5FbDB2315678afecb367f032d93F642f64180aa3 --amount 1500`
+1. In a second terminal, `npx hardhat deploy-with-token --network localhost --daomultisigaddress 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266`
+1. `npx hardhat deposit-into-claimer --network localhost --tokenaddress 0x5FbDB2315678afecb367f032d93F642f64180aa3 --claimeraddress 0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512 --amount 1500`
 
 **In web-app**
 

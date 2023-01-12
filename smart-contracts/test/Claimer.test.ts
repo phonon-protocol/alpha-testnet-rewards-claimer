@@ -14,22 +14,30 @@ import { RewardRow } from "../types";
 const PHONON_REWARDS = ethers.utils.parseEther("100");
 const CLAIMEE_ONE_REWARDS = ethers.utils.parseEther("40");
 const CLAIMEE_TWO_REWARDS = ethers.utils.parseEther("50");
+const CLAIMEE_THREE_REWARDS = ethers.utils.parseEther("10");
 
 describe("Claimer", () => {
   let multiSig: Signer;
   let deployer: Signer;
   let claimeeOne: Signer;
   let claimeeTwo: Signer;
+  let claimeeThree: Signer;
   let thief: Signer;
   let multiSigAddress: string;
   let claimeeOneAddress: string;
   let claimeeTwoAddress: string;
+  let claimeeThreeAddress: string;
   let phonon: MockToken;
   let claimer: PhononDAOTestnetRewardsClaimer;
   let merkleTree: MerkleTreeResult;
   let rewards: RewardRow[];
+  let updatedRewards: RewardRow[];
+  let updatedMerkleTree: MerkleTreeResult;
 
-  const getProofFromAddress = (claimeeAddress: string) => {
+  const getProofFromAddress = (
+    claimeeAddress: string,
+    rewards: RewardRow[]
+  ) => {
     const reward = rewards.find((r) => r.address === claimeeAddress);
     if (!reward) {
       throw new Error(`No reward found for ${claimeeAddress}`);
@@ -43,16 +51,19 @@ describe("Claimer", () => {
       deployerTemp,
       claimeeOneTemp,
       claimeeTwoTemp,
+      claimeeThreeTemp,
       thiefTemp,
     ] = await ethers.getSigners();
     multiSig = multiSigTemp;
     deployer = deployerTemp;
     claimeeOne = claimeeOneTemp;
     claimeeTwo = claimeeTwoTemp;
+    claimeeThree = claimeeThreeTemp;
     thief = thiefTemp;
     multiSigAddress = await multiSig.getAddress();
     claimeeOneAddress = await claimeeOne.getAddress();
     claimeeTwoAddress = await claimeeTwo.getAddress();
+    claimeeThreeAddress = await claimeeThree.getAddress();
 
     rewards = [
       {
@@ -65,7 +76,15 @@ describe("Claimer", () => {
       },
     ];
 
+    updatedRewards = [
+      {
+        address: claimeeThreeAddress,
+        amount: ethers.utils.formatEther(CLAIMEE_THREE_REWARDS),
+      },
+    ];
+
     merkleTree = createMerkleTree(rewards);
+    updatedMerkleTree = createMerkleTree(updatedRewards);
 
     const phononFactory = await ethers.getContractFactory(
       "MockToken",
@@ -93,7 +112,7 @@ describe("Claimer", () => {
 
   describe(".mint", async () => {
     it("Should prevent an account not on the allow list from claiming with a valid proof", async () => {
-      const proof = getProofFromAddress(claimeeOneAddress);
+      const proof = getProofFromAddress(claimeeOneAddress, rewards);
 
       await expectRevert(
         async () => claimer.connect(thief).claim(CLAIMEE_ONE_REWARDS, proof),
@@ -102,7 +121,7 @@ describe("Claimer", () => {
     });
 
     it("Should prevent a claimee from claiming with another claimee's valid proof ", async () => {
-      const proof = getProofFromAddress(claimeeTwoAddress);
+      const proof = getProofFromAddress(claimeeTwoAddress, rewards);
 
       // with claimee two rewards
       await expectRevert(
@@ -119,7 +138,7 @@ describe("Claimer", () => {
     });
 
     it("Should revert when claimee has already claimed", async () => {
-      const proof = getProofFromAddress(claimeeOneAddress);
+      const proof = getProofFromAddress(claimeeOneAddress, rewards);
 
       await claimer.connect(claimeeOne).claim(CLAIMEE_ONE_REWARDS, proof);
 
@@ -134,7 +153,7 @@ describe("Claimer", () => {
       const claimerBeforeBalance = await phonon.balanceOf(claimer.address);
       const claimeeOneBeforeBalance = await phonon.balanceOf(claimeeOneAddress);
 
-      const proof = getProofFromAddress(claimeeOneAddress);
+      const proof = getProofFromAddress(claimeeOneAddress, rewards);
       await claimer.connect(claimeeOne).claim(CLAIMEE_ONE_REWARDS, proof);
 
       const claimerAfterBalance = await phonon.balanceOf(claimer.address);
@@ -145,7 +164,7 @@ describe("Claimer", () => {
       ).to.be.true;
       expect(
         claimeeOneAfterBalance
-          .add(claimeeOneBeforeBalance)
+          .sub(claimeeOneBeforeBalance)
           .eq(CLAIMEE_ONE_REWARDS)
       ).to.be.true;
     });
@@ -170,6 +189,50 @@ describe("Claimer", () => {
       expect(claimerAfterBalance.eq(ethers.constants.Zero)).to.be.true;
       expect(
         multiSigAfterBalance.eq(multiSigBeforeBalance.add(claimerBeforeBalance))
+      ).to.be.true;
+    });
+  });
+
+  describe(".setAllowList", async () => {
+    it("Should prevent non multi sig account from calling", async () => {
+      await expectRevertSenderIsNotOwner(() =>
+        claimer.connect(deployer).setAllowList(updatedMerkleTree.rootHash)
+      );
+    });
+
+    it("Should correctly allow the multi sig account to set the allow list. Claimees on previous allow list should not be able to claim.", async () => {
+      await claimer.connect(multiSig).setAllowList(updatedMerkleTree.rootHash);
+
+      const claimeeOneProof = getProofFromAddress(claimeeOneAddress, rewards);
+      await expectRevert(
+        async () =>
+          await claimer
+            .connect(claimeeOne)
+            .claim(CLAIMEE_ONE_REWARDS, claimeeOneProof),
+        "Invalid proof"
+      );
+
+      const claimeeThreeProof = getProofFromAddress(
+        claimeeThreeAddress,
+        updatedRewards
+      );
+
+      const claimeeThreeBeforeBalance = await phonon.balanceOf(
+        claimeeThreeAddress
+      );
+
+      await claimer
+        .connect(claimeeThree)
+        .claim(CLAIMEE_THREE_REWARDS, claimeeThreeProof);
+
+      const claimeeThreeAfterBalance = await phonon.balanceOf(
+        claimeeThreeAddress
+      );
+
+      expect(
+        claimeeThreeAfterBalance
+          .sub(claimeeThreeBeforeBalance)
+          .eq(CLAIMEE_THREE_REWARDS)
       ).to.be.true;
     });
   });

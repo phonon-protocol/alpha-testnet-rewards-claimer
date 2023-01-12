@@ -14,15 +14,14 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 ///////////////////////////////////////////////////////////////
 
 /// @title PhononDAOTestnetRewardsClaimer
-/// @notice allows Phonon Protcol Testnet participates to claim their PHONON rewards.
+/// @notice allows Phonon Protcol Testnet participants to claim their PHONON rewards.
 /// @author hinchy.eth
 contract PhononDAOTestnetRewardsClaimer is Ownable {
 
   /// @notice PHONON token
   IERC20 public immutable token;
   /// @notice merkle tree root hash as hex string
-  bytes32 public immutable allowList;
-
+  bytes32 public allowList;
   /// @notice mapping of addresses that have claimed tokens
   mapping(address => bool) public hasClaimed;
 
@@ -65,5 +64,11 @@ contract PhononDAOTestnetRewardsClaimer is Ownable {
   /// @notice allows the multi sig to withdraw all PHONON balance
   function withdraw() public onlyOwner {
     token.transfer(owner(), token.balanceOf(address(this)));
+  }
+
+  /// @notice allows the multi sig to set the allow list
+  /// @param _allowList merkle tree root hash as hex string
+  function setAllowList(bytes32 _allowList) public onlyOwner {
+    allowList = _allowList;
   }
 }
